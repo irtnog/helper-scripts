@@ -1,0 +1,88 @@
+
+dn: CN=PWM-Event-Log,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: attributeSchema
+lDAPDisplayName: pwmEventLog
+attributeID: 1.3.6.1.4.1.35015.1.2.1
+attributeSyntax: 2.5.5.10
+oMSyntax: 4
+isSingleValued: FALSE
+showInAdvancedViewOnly: TRUE
+adminDisplayName: PWM-Event-Log
+adminDescription: PWM-Event-Log
+schemaIDGUID:: 8Pa5fIFl8k6iyH3U9TUvcg==
+
+dn: CN=PWM-Response-Set,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: attributeSchema
+lDAPDisplayName: pwmResponseSet
+attributeID: 1.3.6.1.4.1.35015.1.2.2
+attributeSyntax: 2.5.5.10
+oMSyntax: 4
+isSingleValued: FALSE
+showInAdvancedViewOnly: TRUE
+adminDisplayName: PWM-Response-Set
+adminDescription: PWM-Response-Set
+schemaIDGUID:: sojrm35GPkWKrlsHtbUZHQ==
+
+dn: CN=PWM-Last-Password-Update,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: attributeSchema
+lDAPDisplayName: pwmLastPwdUpdate
+attributeID: 1.3.6.1.4.1.35015.1.2.3
+attributeSyntax: 2.5.5.11
+oMSyntax: 24
+isSingleValued: TRUE
+showInAdvancedViewOnly: TRUE
+adminDisplayName: PWM-Last-Password-Update
+adminDescription: PWM-Last-Password-Update
+schemaIDGUID:: LFnKdx6lo0uiw4bRiWz7UQ==
+
+dn: CN=PWM-GUID,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: attributeSchema
+lDAPDisplayName: pwmGUID
+attributeID: 1.3.6.1.4.1.35015.1.2.4
+attributeSyntax: 2.5.5.4
+oMSyntax: 20
+isSingleValued: TRUE
+showInAdvancedViewOnly: TRUE
+adminDisplayName: PWM-GUID
+adminDescription: PWM-GUID
+schemaIDGUID:: NRfipyRrPEaDjRPl1CxzlQ==
+-
+
+dn:
+changetype: ntdsSchemaModify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+dn: CN=PWM-User,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: classSchema
+lDAPDisplayName: pwmUser
+subClassOf: top
+governsID: 1.3.6.1.4.1.35015.1.1.1
+mayContain: pwmEventLog
+mayContain: pwmGUID
+mayContain: pwmLastPwdUpdate
+mayContain: pwmResponseSet
+rDNAttID: cn
+showInAdvancedViewOnly: TRUE
+adminDisplayName: PWM-User
+adminDescription: PWM-User
+objectClassCategory: 3
+schemaIDGUID:: NGLY8ZAlhkqN6XSvh8Ucdw==
+systemOnly: FALSE
+defaultSecurityDescriptor: 
+ D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;DA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)(A;;
+ CCDCLCSWRPWPDTLOCRSDRCWDWO;;;PS)
+defaultObjectCategory: CN=PWM-User,CN=Schema,CN=Configuration,DC=X
+
+dn:
+changetype: ntdsSchemaModify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
