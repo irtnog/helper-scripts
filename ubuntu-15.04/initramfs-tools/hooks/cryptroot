@@ -380,14 +380,23 @@ add_device() {
 		# dm node but not in crypttab, is it a lvm device backed by dm-crypt nodes?
 		lvmnodes=$(get_lvm_deps "$nodes") || return 1
 
-		# not backed by any dm-crypt nodes; stop here
-		if [ -z "$lvmnodes" ]; then
-		    return 0
-		fi
+		if [ ! -z "$lvmnodes" ]; then
+		    # It is a lvm device!
+		    lastopts="lvm=$nodes"
+		    nodes="$lvmnodes"
+		else
+		    # is it a zfs pool backed by dm-crypt nodes?
+		    zpoolnodes=$(get_zpool_deps "$nodes") || return 1
 
-		# It is a lvm device!
-		lastopts="lvm=$nodes"
-		nodes="$lvmnodes"
+		    if [ ! -z "$zpoolnodes" ]; then
+			# It is a zfs pool!
+			lastopts="zpool=$nodes"
+			nodes="$zpoolnodes"
+		    else
+			# not backed by any dm-crypt nodes; stop here
+			return 0
+		    fi
+		fi
 	fi
 
 	# Prepare to setup each node
