@@ -176,6 +176,24 @@ get_lvm_deps() {
 	return 0
 }
 
+get_zpool_deps() {
+	local node deps
+	node="$1"
+
+	if [ -z "$node" ]; then
+		echo "cryptsetup: WARNING: get_zpool_deps - invalid arguments" >&2
+		return 1
+	fi
+
+	if ! deps=$(zpool status | grep "^$(printf '\t')  " | egrep -v '(mirror|raidz|spare|log|cache)' | awk '{print $1}'); then
+		# $node is not a ZFS pool, stopping here
+		return 0
+	fi
+
+	echo "$deps"
+	return 0
+}
+
 get_device_opts() {
 	local target source link extraopts rootopts opt
 	target="$1"
