@@ -17,7 +17,15 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 
 get_root_device() {
-	local device mount type options dump pass
+	local name property value source device mount type options dump pass
+
+	if [ -x /sbin/zpool ]; then
+		zpool get -H bootfs | \
+		while read name property value source; do
+			echo $name
+			return
+		done
+	fi
 
 	if [ ! -r /etc/fstab ]; then
 		return 1
