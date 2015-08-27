@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while read checkout repo upstream
+do
+    ./update-fork $checkout
+done < ./forks

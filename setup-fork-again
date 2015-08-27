@@ -1,10 +1,12 @@
 #!/bin/sh
 
-checkout="`basename $1`"
-repo="git@github.com:$1"
-upstream="git@github.com:$2/$checkout"
+## kind of any ugly hack
+read checkout repo upstream<<EOF
+`grep '^'$1 ./forks`
+EOF
 
 ## clone the repository
+rm -rf $checkout
 git clone $repo
 
 ## ...we came in
@@ -27,6 +29,3 @@ cd ..
 
 ## leave updating the remote-tracking branches for another script
 #./update-fork $checkout
-
-## add this repo to the list of checked out forks
-echo $checkout $repo $upstream >> forks

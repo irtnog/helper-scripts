@@ -1,0 +1,28 @@
+#!/bin/sh
+
+fork=$1
+
+## make sure the fork exists
+if ! -d $fork; then
+    ./setup-fork-again $fork
+fi
+
+## ...we came in?
+cd $fork
+
+## sync with the upstream repo
+git fetch upstream
+
+## everybody remember where we parked
+origbranch=`git branch | fgrep '*' | awk '{print $2}'`
+
+## update all of the branches found in upstream
+for branch in `git branch -r | grep '^  upstream/' | sed -e 's/  upstream\///'`; do
+    git checkout $branch
+    git merge --ff-only upstream/$branch
+    git push
+done
+
+## isn't this where...
+git checkout $origbranch
+cd ..
