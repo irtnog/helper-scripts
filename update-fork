@@ -3,7 +3,7 @@
 fork=$1
 
 ## make sure the fork exists
-if ! -d $fork; then
+if [ ! -d $fork ]; then
     ./setup-fork-again $fork
 fi
 
