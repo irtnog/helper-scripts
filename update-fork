@@ -11,13 +11,13 @@ fi
 cd $fork
 
 ## sync with the upstream repo
-git fetch upstream
+branches=$(git fetch upstream 2>&1 | tee /dev/fd/2 | fgrep .. | awk '{print $2}')
 
 ## everybody remember where we parked
 origbranch=`git branch | fgrep '*' | awk '{print $2}'`
 
-## update all of the branches found in upstream
-for branch in `git branch -r | grep '^  upstream/' | sed -e 's/  upstream\///'`; do
+## sync the branches updated upstream
+for branch in $branches; do
     git checkout $branch
     git merge --ff-only upstream/$branch
     git push
