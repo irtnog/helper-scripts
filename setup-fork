@@ -12,21 +12,27 @@ cd $checkout
 
 ## configure the upstream remote
 git remote add upstream $upstream
+git fetch upstream
 
 ## everybody remember where we parked
 origbranch=`git branch | fgrep '*' | awk '{print $2}'`
 
 ## set up all of the remote-tracking branches
-for branch in `git branch -r | grep -v '\(^  upstream/\|^  origin/HEAD\)' | sed -e 's/  origin\///' | fgrep -v $origbranch`; do
-    git checkout -b $branch --track origin/$branch
+for branch in `git branch -r | grep '^  upstream' | sed -e 's/  upstream\///'`; do
+    if [ "$branch" != "$origbranch" ]; then
+	git checkout -b $branch --track origin/$branch
+    else
+	## the default branch (usually `master` or `develop`) is
+	## already set up to track its origin
+	git checkout $branch
+    fi
+    git merge --ff-only upstream/$branch
+    git push
 done
 
 ## isn't this where...
 git checkout $origbranch
 cd ..
-
-## leave updating the remote-tracking branches for another script
-#./update-fork $checkout
 
 ## add this repo to the list of checked out forks
 echo $checkout $repo $upstream >> forks
