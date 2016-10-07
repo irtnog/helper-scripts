@@ -26,7 +26,7 @@ url: "https://salt.irtnog.org/packages/${ABI}-production"
 w /usr/local/etc/pkg/repos/irtnog.conf
 q
 EOF2
-env SIGNATURE_TYPE=none SSL_NO_VERIFY_PEER=1 pkg install -y py27-salt
+env SIGNATURE_TYPE=none SSL_NO_VERIFY_PEER=1 pkg install -y py27-salt ca_root_nss
 ed /etc/rc.conf <<'EOF3'
 a
 salt_minion_enable="YES"
